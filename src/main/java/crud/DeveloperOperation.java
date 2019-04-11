@@ -1,8 +1,8 @@
 package crud;
 
+import lombok.extern.log4j.Log4j;
 import models.Developer;
 import db.util.ConnectionUtil;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,9 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+@Log4j
 public class DeveloperOperation {
-    private String pathToTheQuery = "src/main/resources/queries/";
-    private static final Logger LOGGER = Logger.getLogger(DeveloperOperation.class.getName());
+    private static final String pathToTheQuery = "src/main/resources/queries/";
 
     private static final String SELECT_ID = "SELECT * FROM developers WHERE id = ?";
     private static final String SELECT_ALL = "SELECT * FROM developers";
@@ -37,7 +37,7 @@ public class DeveloperOperation {
             Developer developer = createDeveloper(resultSet);
             return developer;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             return null;
         } finally {
             resultSet.close();
@@ -56,7 +56,7 @@ public class DeveloperOperation {
             }
             return result;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             resultSet.close();
         }
@@ -73,7 +73,7 @@ public class DeveloperOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
@@ -91,7 +91,7 @@ public class DeveloperOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
@@ -110,7 +110,7 @@ public class DeveloperOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
@@ -138,7 +138,7 @@ public class DeveloperOperation {
                 sql = new Scanner(new File(pathToTheQuery + "salaryOfDevelopersBySeparateProject.sql"))
                         .useDelimiter("\\A").next();
             } catch (FileNotFoundException e) {
-                LOGGER.error(e.getMessage());
+                log.error(e.getMessage());
             }
             preparedStatement.setString(1, projectName);
             resultSet = preparedStatement.executeQuery();
@@ -146,7 +146,7 @@ public class DeveloperOperation {
             double salary = resultSet.getDouble(1);
             return salary;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             return 0;
         } finally {
             resultSet.close();
@@ -162,7 +162,7 @@ public class DeveloperOperation {
             try {
                 sql = new Scanner(new File(pathToSql)).useDelimiter("\\A").next();
             } catch (FileNotFoundException e) {
-                LOGGER.error(e.getMessage());
+                log.error(e.getMessage());
             }
             preparedStatement.setString(1, conditionalField);
             resultSet = preparedStatement.executeQuery();
@@ -173,7 +173,7 @@ public class DeveloperOperation {
             }
             return result;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             resultSet.close();
         }

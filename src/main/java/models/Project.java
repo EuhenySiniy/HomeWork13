@@ -10,5 +10,5 @@ import lombok.Data;
 public class Project {
     private int id;
     private String name;
-    private double coast;
+    private double cost;
 }

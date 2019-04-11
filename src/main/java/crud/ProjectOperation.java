@@ -1,8 +1,8 @@
 package crud;
 
+import lombok.extern.log4j.Log4j;
 import models.Project;
 import db.util.ConnectionUtil;
-import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Log4j
 public class ProjectOperation {
-    private static final Logger LOGGER = Logger.getLogger(ProjectOperation.class.getName());
-
     private static final String SELECT_ID = "SELECT * FROM projects WHERE id = ?";
     private static final String SELECT_ALL = "SELECT * FROM projects";
     private static final String INSERT = "INSERT INTO projects(name, cost) VALUES(?, ?))";
@@ -33,7 +32,7 @@ public class ProjectOperation {
             Project project = createProject(resultSet);
             return project;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             resultSet.close();
         }
@@ -52,7 +51,7 @@ public class ProjectOperation {
             }
             return result;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             resultSet.close();
         }
@@ -69,7 +68,7 @@ public class ProjectOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
@@ -86,7 +85,7 @@ public class ProjectOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
@@ -104,7 +103,7 @@ public class ProjectOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }

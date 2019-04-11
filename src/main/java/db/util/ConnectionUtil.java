@@ -1,26 +1,29 @@
 package db.util;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
-
+@Log4j
 public class ConnectionUtil {
-    private static final Logger LOGGER = Logger.getLogger(ConnectionUtil.class.getName());
-
-    private static final String URL = "jdbc:mysql://localhost:3306/mateacademy";
-    private static final String USER_NAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
     public static Connection getConnection() {
+        Properties properties = new Properties();
         try {
-            Class.forName(DRIVER);
-            return DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.error(e.getMessage());
+            properties.load(new FileInputStream("src/main/resources/config.properties"));
+            String url = properties.getProperty("db.host");
+            String userName = properties.getProperty("db.login");
+            String password = properties.getProperty("db.password");
+            String driver = properties.getProperty("db.driver");
+            Class.forName(driver);
+            return DriverManager.getConnection(url, userName, password);
+        } catch (SQLException | ClassNotFoundException | IOException e) {
+            log.error(e.getMessage());
         }
         return null;
     }

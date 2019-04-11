@@ -1,8 +1,8 @@
 package crud;
 
+import lombok.extern.log4j.Log4j;
 import models.Company;
 import db.util.ConnectionUtil;
-import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Log4j
 public class CompanyOperation {
-    private static final Logger LOGGER = Logger.getLogger(CompanyOperation.class.getName());
-
     private static final String SELECT_ID = "SELECT * FROM companies WHERE id = ?";
     private static final String SELECT_ALL = "SELECT * FROM companies";
     private static final String INSERT = "INSERT INTO companies(name, address) VALUES(?, ?)";
@@ -33,7 +32,7 @@ public class CompanyOperation {
             Company company = createCompany(resultSet);
             return company;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             return null;
         } finally {
             resultSet.close();
@@ -52,7 +51,7 @@ public class CompanyOperation {
             }
             return result;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             resultSet.close();
         }
@@ -69,7 +68,7 @@ public class CompanyOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
@@ -81,12 +80,12 @@ public class CompanyOperation {
             assert connection != null;
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
-            preparedStatement.setString(1, object.getName);
+            preparedStatement.setString(1, object.getName());
             preparedStatement.setString(2, object.getAddress());
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
@@ -104,7 +103,7 @@ public class CompanyOperation {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             preparedStatement.close();
         }
