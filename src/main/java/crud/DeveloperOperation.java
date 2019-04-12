@@ -30,7 +30,6 @@ public class DeveloperOperation {
         ResultSet resultSet = null;
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ID)) {
-            assert connection != null;
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -48,7 +47,6 @@ public class DeveloperOperation {
         ResultSet resultSet = null;
         try (Connection connection = ConnectionUtil.getConnection();
              Statement statement = connection.createStatement()) {
-            assert connection != null;
             resultSet = statement.executeQuery(SELECT_ALL);
             List<Developer> result = new ArrayList<>();
             while (resultSet.next()) {
@@ -66,7 +64,6 @@ public class DeveloperOperation {
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
-            assert connection != null;
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE);
             preparedStatement.setInt(1, id);
@@ -82,7 +79,6 @@ public class DeveloperOperation {
     public void insert(Developer object) throws SQLException {
         PreparedStatement preparedStatement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
-            assert connection != null;
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, object.getName());
@@ -100,7 +96,6 @@ public class DeveloperOperation {
     public void update(Developer object) throws SQLException {
         PreparedStatement preparedStatement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
-            assert connection != null;
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setString(1, object.getName());
@@ -132,7 +127,6 @@ public class DeveloperOperation {
         ResultSet resultSet = null;
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ID)) {
-            assert connection != null;
             String sql = null;
             try {
                 sql = new Scanner(new File(pathToTheQuery + "salaryOfDevelopersBySeparateProject.sql"))
@@ -157,7 +151,6 @@ public class DeveloperOperation {
         ResultSet resultSet = null;
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ID)) {
-            assert connection != null;
             String sql = null;
             try {
                 sql = new Scanner(new File(pathToSql)).useDelimiter("\\A").next();

@@ -25,7 +25,6 @@ public class SkillOperation {
         ResultSet resultSet = null;
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ID)) {
-            assert connection != null;
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -43,7 +42,6 @@ public class SkillOperation {
         ResultSet resultSet = null;
         try (Connection connection = ConnectionUtil.getConnection();
              Statement statement = connection.createStatement()) {
-            assert connection != null;
             resultSet = statement.executeQuery(SELECT_ALL);
             List<Skill> result = new ArrayList<>();
             while (resultSet.next()) {
@@ -61,7 +59,6 @@ public class SkillOperation {
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
-            assert connection != null;
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE);
             preparedStatement.setInt(1, id);
@@ -77,7 +74,6 @@ public class SkillOperation {
     public void insert(Skill object) throws SQLException {
         PreparedStatement preparedStatement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
-            assert connection != null;
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, object.getIndustry());
@@ -94,7 +90,6 @@ public class SkillOperation {
     public void update(Skill object) throws SQLException {
         PreparedStatement preparedStatement = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
-            assert connection != null;
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setString(1, object.getIndustry());
